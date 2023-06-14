@@ -1,10 +1,7 @@
 import {empty, has, maybe, nothing} from '@ryandur/sand';
-import {explanation} from '../http';
 import {cable} from './cable';
-import {AuthStates} from '../../domain/auth/_data_';
 import {Subscription} from '@rails/actioncable';
 import {AppChannel} from './types';
-import {performance} from '../performance';
 import {PingContract, UpdateContract, CreateContract, DeleteContract, ErrorContract} from './_data_';
 
 const logProblemWith = (message: unknown) => () => console.error('problem with:', message);
@@ -18,7 +15,6 @@ export const socket = (
 ): AppChannel => {
   if (Object.hasOwn(channels, channel)) return channels[channel];
   let subscriptions: { [id: string]: Subscription } = {};
-  const performanceListeners = performance();
 
   channels[channel] = {
     name: channel,
@@ -48,20 +44,16 @@ export const socket = (
                 .or(() => maybe(DeleteContract.decode(message)).mBind(({destroy}) => onDelete(destroy)))
                 .or(() => onMessage(message))
                 .orElse(logProblemWith(message));
-              performanceListeners.onMessage?.(channel);
             }
           },
           connected: () => {
-            performanceListeners.onConnected?.(channel);
             subscriptions[String(id)].perform('hydrate');
           },
           disconnected: () => {
-            performanceListeners.onDisconnected?.(channel);
-            onUnauthenticated(explanation(AuthStates.UNAUTHENTICATED));
+            onUnauthenticated('UNAUTHENTICATED');
           },
           rejected: () => {
-            performanceListeners.onRejected?.(channel);
-            onUnauthorized(explanation(AuthStates.UNAUTHORIZED));
+            onUnauthorized('UNAUTHORIZED');
           }
         })
       };

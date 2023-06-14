@@ -1,4 +1,4 @@
-import {SubscriptionEventHandlers} from './subscriptionEventHandlers';
+import {SubscriptionEventHandlers} from './SubscriptionEventHandlers';
 
 
 type ChannelId = (string | 'currentUser')
