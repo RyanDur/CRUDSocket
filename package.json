@@ -1,0 +1,51 @@
+{
+  "name": "@ryandur/crudsocket",
+  "version": "0.0.0",
+  "description": "A way to do crud actions over a websocket that is wrapped in actioncableA way to do crud actions over a websocket that is wrapped in actioncable",
+  "main": "./dist/crudsocket.umd.cjs",
+  "module": "./dist/crudsocket.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/crudsocket.js",
+      "require": "./dist/crudsocket.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "lint": "npx eslint .",
+    "test": "vitest",
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "prepack": "npm run build"
+  },
+  "author": "ryan durling",
+  "license": "MIT",
+  "devDependencies": {
+    "@faker-js/faker": "^7.6.0",
+    "@types/node": "^18.13.0",
+    "@types/rails__actioncable": "^6.1.6",
+    "@types/uuid": "^9.0.1",
+    "@typescript-eslint/eslint-plugin": "^5.52.0",
+    "eslint": "^8.34.0",
+    "eslint-config-standard-with-typescript": "^34.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^15.6.1",
+    "eslint-plugin-promise": "^6.1.1",
+    "fetch-mock": "^9.11.0",
+    "jsdom": "^21.1.0",
+    "typescript": "^4.9.5",
+    "vite": "^4.2.0",
+    "vite-plugin-dts": "^2.2.0",
+    "vitest": "^0.29.8"
+  },
+  "dependencies": {
+    "@rails/actioncable": "^7.0.4-2",
+    "@ryandur/sand": "^1.4.4",
+    "node-fetch": "^2.6.9",
+    "schemawax": "^1.0.12"
+  }
+}
